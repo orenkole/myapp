@@ -3,14 +3,13 @@ pipeline {
 
     environment {
         DOCKER_CREDENTIALS_ID = 'dockerhubkey'
-        DOCKER_IMAGE = 'destroyyer/myapp'
-    
+        DOCKER_IMAGE = 'orenkole/myapp'
     }
 
     stages {
         stage('Clone the repository') {
             steps {
-                git branch: 'main', url: 'https://github.com/DeStroyyer/myapp.git'
+                git branch: 'main', url: 'https://github.com/orenkole/myapp.git'
             }
         }
         stage('Build docker image') {
@@ -20,10 +19,10 @@ pipeline {
                 }
             }
         }
-        stage('Run testa') {
+        stage('Run tests') {
             steps {
                 script {
-                    sh "echo 'run sone tests'"
+                    sh "echo 'run some tests'"
                 }
             }
         }
@@ -31,12 +30,10 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS_ID) {
-                    docker.image(DOCKER_IMAGE).push()
+                        docker.image(DOCKER_IMAGE).push()
                     }
                 }
             }
-
         }
-
     }
 }
